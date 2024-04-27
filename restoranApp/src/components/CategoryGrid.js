@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Pressable } from "react-native";
 import React from "react";
 
-export default function CategoryGrid({ id, title, color }) {
+export default function CategoryGrid({ id, title, color,pressFood }) {
   return (
     <View style={styles.gridItem}>
       <Pressable
@@ -9,6 +9,7 @@ export default function CategoryGrid({ id, title, color }) {
           styles.button,
           pressed ? styles.buttonPressed : null,
         ]}
+        onPress={pressFood}
       >
         <View style={[styles.insideView, { backgroundColor: color }]}>
           <Text style={styles.title}>{title}</Text>

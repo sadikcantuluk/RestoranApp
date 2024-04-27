@@ -3,14 +3,19 @@ import React from "react";
 import { CATEGORIES } from "../data/dummy-data";
 import CategoryGrid from "../components/CategoryGrid";
 
-export default function CategoryScreen() {
+export default function CategoryScreen({ navigation }) {
   const renderCategoryItem = (itemData) => {
-    //console.log(itemData.item);
+    
+    const handlePressFood = () => {
+      navigation.navigate("FoodOverview");
+    };
+
     return (
       <CategoryGrid
         id={itemData.item.id}
         title={itemData.item.title}
         color={itemData.item.color}
+        pressFood={handlePressFood}
       />
     );
   };
