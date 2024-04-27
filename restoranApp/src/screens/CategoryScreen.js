@@ -7,7 +7,7 @@ export default function CategoryScreen({ navigation }) {
   const renderCategoryItem = (itemData) => {
     
     const handlePressFood = () => {
-      navigation.navigate("FoodOverview");
+      navigation.navigate("FoodOverview", { categoryId: itemData.item.id });
     };
 
     return (
