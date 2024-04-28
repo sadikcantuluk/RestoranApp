@@ -1,11 +1,38 @@
-import { StyleSheet, Text, View, Image, ScrollView } from "react-native";
-import React from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  ScrollView,
+  Pressable,
+} from "react-native";
+import React, { useLayoutEffect } from "react";
 import { FOODS } from "../data/dummy-data";
 import FoodIngredients from "../components/FoodIngredients";
+import { Ionicons } from "@expo/vector-icons";
 
-export default function FoodDetailScreen({ route }) {
+export default function FoodDetailScreen({ route, navigation }) {
   const foodId = route.params.foodId;
   const selectedFood = FOODS.find((food) => food.id === foodId);
+
+  const handlePressStar = () => {
+    console.log("Favorilere eklendi");
+  };
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => {
+        return (
+          <Pressable
+            style={({ pressed }) => (pressed ? styles.pressed : null)}
+            onPress={handlePressStar}
+          >
+            <Ionicons name="star-half-outline" size={36} color="black" />
+          </Pressable>
+        );
+      },
+    });
+  }, [navigation]);
 
   return (
     <ScrollView style={styles.container}>
@@ -45,17 +72,17 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginVertical: 4,
   },
-  complexityContainer:{
-    backgroundColor:'#45FFCA',
-    marginHorizontal:10,
-    borderRadius:5,
-    padding:4
+  complexityContainer: {
+    backgroundColor: "#45FFCA",
+    marginHorizontal: 10,
+    borderRadius: 5,
+    padding: 4,
   },
-  affordabilityContainer:{
-    backgroundColor:'yellow',
-    marginHorizontal:10,
-    borderRadius:5,
-    padding:4
+  affordabilityContainer: {
+    backgroundColor: "yellow",
+    marginHorizontal: 10,
+    borderRadius: 5,
+    padding: 4,
   },
   details: {
     flexDirection: "row",
@@ -67,7 +94,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 5,
     fontSize: 12,
     color: "black",
-    fontWeight:'bold'
+    fontWeight: "bold",
   },
   innerContainer: {
     marginVertical: 5,
@@ -78,5 +105,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     color: "blue",
     fontSize: 20,
+  },
+  pressed: {
+    opacity: 0.5,
   },
 });
