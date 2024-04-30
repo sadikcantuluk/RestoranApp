@@ -8,7 +8,7 @@ import FoodDetailScreen from "./src/screens/FoodDetailScreen";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import FavoritesScreen from "./src/screens/FavoritesScreen";
 import { Ionicons } from "@expo/vector-icons";
-import FavoritesContextProvider from "./store/favouritescontext";
+import FavoritesContextProvider from "./src/store/FavouritesContext";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();

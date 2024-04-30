@@ -6,17 +6,29 @@ import {
   ScrollView,
   Pressable,
 } from "react-native";
-import React, { useLayoutEffect } from "react";
+import React, { useLayoutEffect, useContext } from "react";
 import { FOODS } from "../data/dummy-data";
 import FoodIngredients from "../components/FoodIngredients";
 import { Ionicons } from "@expo/vector-icons";
+import { FavoritesContext } from "../store/FavouritesContext.js";
 
 export default function FoodDetailScreen({ route, navigation }) {
+  const favoriteFoodContext = useContext(FavoritesContext);
   const foodId = route.params.foodId;
   const selectedFood = FOODS.find((food) => food.id === foodId);
 
+  const foodIsFavorite = favoriteFoodContext.ids.includes(foodId);
+
   const handlePressStar = () => {
     console.log("Favorilere eklendi");
+  };
+
+  const changeFavorite = () => {
+    if (foodIsFavorite) {
+      favoriteFoodContext.removeFavorite(foodId);
+    } else {
+      favoriteFoodContext.addFavorite(foodId);
+    }
   };
 
   useLayoutEffect(() => {
@@ -27,12 +39,17 @@ export default function FoodDetailScreen({ route, navigation }) {
             style={({ pressed }) => (pressed ? styles.pressed : null)}
             onPress={handlePressStar}
           >
-            <Ionicons name="star-half-outline" size={36} color="black" />
+            <Ionicons
+              name={foodIsFavorite ? "star" : "star-outline"}
+              size={36}
+              color="black"
+              onPress={changeFavorite}
+            />
           </Pressable>
         );
       },
     });
-  }, [navigation]);
+  }, [navigation, changeFavorite]);
 
   return (
     <ScrollView style={styles.container}>
