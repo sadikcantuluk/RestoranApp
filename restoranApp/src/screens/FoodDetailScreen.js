@@ -11,13 +11,21 @@ import { FOODS } from "../data/dummy-data";
 import FoodIngredients from "../components/FoodIngredients";
 import { Ionicons } from "@expo/vector-icons";
 import { FavoritesContext } from "../store/FavouritesContext.js";
+import { useDispatch, useSelector } from "react-redux";
+import { addFavorite, removeFavorite } from "../store/redux/favoriteSlice.js";
 
 export default function FoodDetailScreen({ route, navigation }) {
-  const favoriteFoodContext = useContext(FavoritesContext);
+  const favoriteFoodIDS = useSelector((store) => store.favorites.ids);
+  // const favoriteFoodContext = useContext(FavoritesContext);
+
+  const dispatch = useDispatch();
+
   const foodId = route.params.foodId;
   const selectedFood = FOODS.find((food) => food.id === foodId);
 
-  const foodIsFavorite = favoriteFoodContext.ids.includes(foodId);
+  // const foodIsFavorite = favoriteFoodContext.ids.includes(foodId);
+
+  const foodIsFavorite = favoriteFoodIDS.includes(foodId);
 
   const handlePressStar = () => {
     console.log("Favorilere eklendi");
@@ -25,9 +33,11 @@ export default function FoodDetailScreen({ route, navigation }) {
 
   const changeFavorite = () => {
     if (foodIsFavorite) {
-      favoriteFoodContext.removeFavorite(foodId);
+      dispatch(removeFavorite({ id: foodId }));
+      // favoriteFoodContext.removeFavorite(foodId);
     } else {
-      favoriteFoodContext.addFavorite(foodId);
+      dispatch(addFavorite({ id: foodId }));
+      // favoriteFoodContext.addFavorite(foodId);
     }
   };
 
