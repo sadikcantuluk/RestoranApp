@@ -3,12 +3,19 @@ import React, { useContext } from "react";
 import { FavoritesContext } from "../store/FavouritesContext";
 import { FOODS } from "../data/dummy-data";
 import FoodList from "../components/FoodList";
+import { useSelector } from "react-redux";
 
 export default function FavoritesScreen({ navigation }) {
-  const favoriteFoodContext = useContext(FavoritesContext);
+  
+  const favoriteFoodIDS = useSelector((store) => store.favorites.ids);
+  // const favoriteFoodContext = useContext(FavoritesContext);
+
+  // const favoriteFoods = FOODS.filter((food) =>
+  //   favoriteFoodContext.ids.includes(food.id)
+  // );
 
   const favoriteFoods = FOODS.filter((food) =>
-    favoriteFoodContext.ids.includes(food.id)
+    favoriteFoodIDS.includes(food.id)
   );
 
   if (favoriteFoods.length === 0) {
@@ -36,7 +43,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 18,
     fontWeight: "bold",
-    marginBottom:10
+    marginBottom: 10,
   },
-  
 });
