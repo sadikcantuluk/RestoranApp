@@ -5,6 +5,7 @@ import {
   Image,
   ScrollView,
   Pressable,
+  KeyboardAvoidingView,
 } from "react-native";
 import React, { useLayoutEffect, useContext } from "react";
 import { FOODS } from "../data/dummy-data";
@@ -13,6 +14,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { FavoritesContext } from "../store/FavouritesContext.js";
 import { useDispatch, useSelector } from "react-redux";
 import { addFavorite, removeFavorite } from "../store/redux/favoriteSlice.js";
+import SearchBar from "../components/SearchBar.js";
 
 export default function FoodDetailScreen({ route, navigation }) {
   const favoriteFoodIDS = useSelector((store) => store.favorites.ids);

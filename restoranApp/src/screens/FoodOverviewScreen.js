@@ -1,15 +1,27 @@
-import { StyleSheet, Text, View } from "react-native";
-import React, { useLayoutEffect } from "react";
+import { KeyboardAvoidingView, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useLayoutEffect } from "react";
 import { FOODS, CATEGORIES } from "../data/dummy-data";
 import FoodList from "../components/FoodList";
+import SearchBar from "../components/SearchBar";
+import { useDispatch, useSelector } from "react-redux";
+import { clearText } from "../store/redux/searchSlice";
 
 export default function FoodOverviewScreen({ route, navigation }) {
-  
+  const { text } = useSelector((store) => store.search);
+  const dispatch = useDispatch();
+
   const categoryId = route.params.categoryId;
 
   const displayedFoods = FOODS.filter((foodItem) => {
-    return foodItem.categoryIds.indexOf(categoryId) >= 0;
+    return (
+      foodItem.categoryIds.indexOf(categoryId) >= 0 &&
+      foodItem.title.indexOf(text) >= 0
+    );
   });
+
+  useEffect(() => {
+    dispatch(clearText());
+  }, []);
 
   useLayoutEffect(() => {
     const categoryTitle = CATEGORIES.find(
@@ -21,7 +33,12 @@ export default function FoodOverviewScreen({ route, navigation }) {
     });
   }, [categoryId, navigation]);
 
-  return <FoodList items={displayedFoods} />;
+  return (
+    <KeyboardAvoidingView>
+      <SearchBar />
+      <FoodList items={displayedFoods} />
+    </KeyboardAvoidingView>
+  );
 }
 
 const styles = StyleSheet.create({});
