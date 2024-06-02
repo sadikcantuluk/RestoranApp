@@ -11,6 +11,8 @@ import { Ionicons } from "@expo/vector-icons";
 import FavoritesContextProvider from "./src/store/FavouritesContext";
 import { Provider } from "react-redux";
 import { store } from "./src/store/redux/store";
+import LoginScreen from "./src/screens/LoginScreen";
+import HomeScreen from "./src/screens/HomeScreen";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -28,6 +30,14 @@ function DrawerNavigator() {
         headerTintColor: "#3C5B6F",
       }}
     >
+      <Drawer.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          title: "Anasayfa",
+          drawerIcon: () => <Ionicons name="home" size={24} color="black" />,
+        }}
+      />
       <Drawer.Screen
         name="Category"
         component={CategoryScreen}
@@ -50,8 +60,6 @@ function DrawerNavigator() {
   );
 }
 
-
-
 export default function App() {
   return (
     <NavigationContainer>
@@ -68,6 +76,7 @@ export default function App() {
             headerTintColor: "#3C5B6F",
           }}
         >
+          <Stack.Screen name="Login" component={LoginScreen} />
           <Stack.Screen
             name="Drawer"
             component={DrawerNavigator}

@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import React from "react";
 import FoodItem from "./FoodItem";
+import SearchBar from "./SearchBar";
 
 export default function FoodList({ items }) {
   const renderFoodItem = (itemData) => {
@@ -20,6 +21,7 @@ export default function FoodList({ items }) {
         data={items}
         keyExtractor={(item) => item.id}
         renderItem={renderFoodItem}
+        ListHeaderComponent={<SearchBar />}
       />
     </View>
   );

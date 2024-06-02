@@ -11,6 +11,7 @@ export default function SearchBar() {
       <TextInput
         style={styles.input}
         placeholder="Ara..."
+        placeholderTextColor="#50727B"
         onChangeText={(text) => dispatch(changeText({ text: text }))}
       />
     </View>
@@ -19,10 +20,10 @@ export default function SearchBar() {
 
 const styles = StyleSheet.create({
   container: {
-    borderWidth: 2,
+    borderWidth: 1,
     padding: 5,
     borderRadius: 5,
-    borderColor: "#DDDDDD",
+    borderColor: "#474F7A",
     marginVertical: 8,
     marginHorizontal: 5,
   },

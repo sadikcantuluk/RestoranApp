@@ -35,7 +35,6 @@ export default function FoodOverviewScreen({ route, navigation }) {
 
   return (
     <KeyboardAvoidingView>
-      <SearchBar />
       <FoodList items={displayedFoods} />
     </KeyboardAvoidingView>
   );

@@ -1,26 +1,35 @@
 import {
   FlatList,
   KeyboardAvoidingView,
+  ScrollView,
   StyleSheet,
   Text,
   View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CATEGORIES } from "../data/dummy-data";
 import CategoryGrid from "../components/CategoryGrid";
 import SearchBar from "../components/SearchBar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { clearText } from "../store/redux/searchSlice";
 
 export default function CategoryScreen({ navigation }) {
   const { text } = useSelector((store) => store.search);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(clearText());
+  }, []);
 
   const renderCategoryItem = (itemData) => {
     const handlePressFood = () => {
       navigation.navigate("FoodOverview", { categoryId: itemData.item.id });
     };
 
-    return itemData.item.title.toLowerCase().indexOf(text.toLowerCase()) >
-      -1 ? (
+    const categoryTitle = itemData.item.title.toLowerCase();
+    const searchText = text.toLowerCase();
+
+    return categoryTitle.includes(searchText) ? (
       <CategoryGrid
         id={itemData.item.id}
         title={itemData.item.title}
@@ -32,12 +41,12 @@ export default function CategoryScreen({ navigation }) {
 
   return (
     <KeyboardAvoidingView>
-      <SearchBar />
       <FlatList
         data={CATEGORIES}
         keyExtractor={(item) => item.id}
         renderItem={renderCategoryItem}
         numColumns={2}
+        ListHeaderComponent={<SearchBar />}
       />
     </KeyboardAvoidingView>
   );
