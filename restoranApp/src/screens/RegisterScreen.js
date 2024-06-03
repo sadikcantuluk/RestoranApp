@@ -10,39 +10,22 @@ import React, { useEffect, useState } from "react";
 import { auth } from "../../firebase";
 import { useNavigation } from "@react-navigation/native";
 
-export default function LoginScreen() {
+export default function RegisterScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const navigation = useNavigation();
 
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        navigation.navigate("Drawer");
-      }
-    });
-  }, []);
-
   const handleRegister = () => {
-    // auth
-    //   .createUserWithEmailAndPassword(email, password)
-    //   .then((userInfo) => {
-    //     const user = userInfo.user;
-    //     console.log("Kayıt başarılı : " + user.email);
-    //   })
-    //   .catch((error) => {
-    //     alert(error.message);
-    //   });
-    navigation.navigate("Register");
-  };
-
-  const handleSign = () => {
     auth
-      .signInWithEmailAndPassword(email, password)
+      .createUserWithEmailAndPassword(email, password)
       .then((userInfo) => {
         const user = userInfo.user;
-        console.log("Giriş başarılı : " + user.email);
+        console.log("Kayıt başarılı : " + user.email);
+
+        auth.signOut().then(() => {
+          navigation.navigate("Login");
+        });
       })
       .catch((error) => {
         alert(error.message);
@@ -65,9 +48,6 @@ export default function LoginScreen() {
         />
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.btnSign} onPress={handleSign}>
-          <Text style={styles.btnText}>Giriş Yap</Text>
-        </TouchableOpacity>
         <TouchableOpacity style={styles.btnLogin} onPress={handleRegister}>
           <Text style={styles.btnText}>Kayıt Ol</Text>
         </TouchableOpacity>

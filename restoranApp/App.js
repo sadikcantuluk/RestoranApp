@@ -13,6 +13,7 @@ import { Provider } from "react-redux";
 import { store } from "./src/store/redux/store";
 import LoginScreen from "./src/screens/LoginScreen";
 import HomeScreen from "./src/screens/HomeScreen";
+import RegisterScreen from "./src/screens/RegisterScreen";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -76,7 +77,20 @@ export default function App() {
             headerTintColor: "#3C5B6F",
           }}
         >
-          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen
+            name="Login"
+            component={LoginScreen}
+            options={{
+              title: "Giriş Ekranı",
+            }}
+          />
+          <Stack.Screen
+            name="Register"
+            component={RegisterScreen}
+            options={{
+              title: "Kayıt Ekranı",
+            }}
+          />
           <Stack.Screen
             name="Drawer"
             component={DrawerNavigator}
