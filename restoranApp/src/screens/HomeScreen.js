@@ -19,7 +19,8 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <Text>Email : {auth.currentUser?.email}</Text>
+      <Text style={styles.titleText}>Aktif Olan Kullanıcı</Text>
+      <Text style={styles.userMail}>Email : {auth.currentUser?.email}</Text>
       <TouchableOpacity style={styles.btnLogin} onPress={handloLogOut}>
         <Text style={styles.btnText}>Çıkış Yap</Text>
       </TouchableOpacity>
@@ -32,6 +33,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  titleText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  userMail: {
+    fontSize: 18,
+    marginBottom: 10,
   },
   btnLogin: {
     borderWidth: 1,

@@ -12,14 +12,19 @@ import CategoryGrid from "../components/CategoryGrid";
 import SearchBar from "../components/SearchBar";
 import { useDispatch, useSelector } from "react-redux";
 import { clearText } from "../store/redux/searchSlice";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function CategoryScreen({ navigation }) {
   const { text } = useSelector((store) => store.search);
   const dispatch = useDispatch();
 
+  const isFocused = useIsFocused();
+
   useEffect(() => {
-    dispatch(clearText());
-  }, []);
+    if (!isFocused) {
+      dispatch(clearText());
+    }
+  }, [isFocused]);
 
   const renderCategoryItem = (itemData) => {
     const handlePressFood = () => {

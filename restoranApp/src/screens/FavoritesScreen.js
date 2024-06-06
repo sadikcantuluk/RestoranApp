@@ -1,11 +1,23 @@
 import { StyleSheet, Text, View, Button } from "react-native";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { FavoritesContext } from "../store/FavouritesContext";
 import { FOODS } from "../data/dummy-data";
 import FoodList from "../components/FoodList";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useIsFocused } from "@react-navigation/native";
+import { clearText } from "../store/redux/searchSlice";
 
 export default function FavoritesScreen({ navigation }) {
+
+  const dispatch = useDispatch();
+
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    if (!isFocused) {
+      dispatch(clearText());
+    }
+  }, [isFocused]);
   
   const favoriteFoodIDS = useSelector((store) => store.favorites.ids);
   // const favoriteFoodContext = useContext(FavoritesContext);

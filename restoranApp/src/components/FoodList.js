@@ -2,8 +2,12 @@ import { StyleSheet, Text, View, FlatList } from "react-native";
 import React from "react";
 import FoodItem from "./FoodItem";
 import SearchBar from "./SearchBar";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function FoodList({ items }) {
+  const { text } = useSelector((store) => store.search);
+  const dispatch = useDispatch();
+
   const renderFoodItem = (itemData) => {
     const foodItemsProps = {
       id: itemData.item.id,
@@ -12,7 +16,13 @@ export default function FoodList({ items }) {
       affordability: itemData.item.affordability,
       complexity: itemData.item.complexity,
     };
-    return <FoodItem {...foodItemsProps} />;
+
+    const foodTitle = foodItemsProps.title.toLowerCase();
+    const searchText = text.toLowerCase();
+
+    return foodTitle.includes(searchText) ? (
+      <FoodItem {...foodItemsProps} />
+    ) : null;
   };
 
   return (
